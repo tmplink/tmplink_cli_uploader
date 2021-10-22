@@ -1,6 +1,10 @@
 // tmp.link CLI uploader
 // Language: go
 // Path: main.go
+// Version: 1, alpha
+// Todo: add upload progress
+// Todo: add flash upload
+// Todo: parse json response
 
 package main
 
@@ -26,7 +30,7 @@ func init() {
 	flag.BoolVar(&h, "h", false, "this help")
 	flag.BoolVar(&v, "v", false, "show version and exit")
 	flag.StringVar(&token, "k", "N/A", "your account token")
-	flag.StringVar(&model, "m", "0", "upload model, 0 : only 24 hours, 1,2,3: 24,72,")
+	flag.StringVar(&model, "m", "0", "upload mode.\n 0 : Valid for 24 hours only.\n 1, 2 : Valid for 1 day, 7 days, automatically extended when someone downloads.\n 99 : Valid for a long time.")
 	flag.StringVar(&filepath, "f", "", "upload file path")
 }
 
@@ -109,17 +113,4 @@ func multipartUpload(destURL string, f io.Reader, fields map[string]string) (*ht
 	}
 
 	return resp, nil
-
-	// req, err := http.NewRequest("POST", destURL, body)
-	// if err != nil {
-	//  return nil, err
-	// }
-
-	// req.Header.Set("Content-Type", writer.FormDataContentType())
-
-	// if req.Close && req.Body != nil {
-	//  defer req.Body.Close()
-	// }
-
-	// return http.DefaultClient.Do(req)
 }
